@@ -1,0 +1,48 @@
+---
+# tasks file for ansible-role-httpd
+- name: install and update latest packages
+  yum:
+    name:
+      - "{{ webserver_package }}"
+      - "{{ firewall_package }}"
+    state: latest
+  when:
+    - ansible_os_family in os_family or ansible_distribution in os_distributions
+
+#using pattern below gives a mistake "This module does not currently support using glob patterns".
+#Needs further investigation 
+#- name: start and enable services
+#  service:
+#    name:
+#      - "{{ web_service }}"
+#      - "{{ firewall_service }}"
+#    enabled: true
+#    state: started
+
+- name: start and enable web_service
+  service:
+    name: "{{ web_service }}"
+    enabled: true
+    state: started
+    
+- name: start and enable firewall_service
+  service:
+    name: "{{ firewall_service }}"
+    enabled: true
+    state: started
+
+- name: create web content
+  template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
+    mode: 0755
+  notify: reload webserver
+
+- name: open firewall for {{ rule }}
+  firewalld:
+    service: "{{ rule }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  notify: reload firewall
+...

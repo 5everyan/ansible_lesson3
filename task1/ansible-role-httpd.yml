@@ -1,0 +1,5 @@
+---
+- name: run Apache web-server installation role
+  hosts: nodes
+  roles:
+    - ansible-role-httpd

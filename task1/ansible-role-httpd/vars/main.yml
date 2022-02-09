@@ -1,0 +1,30 @@
+---
+# vars file for ansible-role-httpd
+
+# using ansible facts
+os_family:
+  - RedHat
+
+os_distributions:
+  - RedHat
+  - CentOS
+  - Fedora
+  - Scientific
+  - CloudLinux
+  - OracleLinux
+  - Amazon
+  - XenServer
+  
+# webserver vars
+webserver_package: httpd
+web_service: httpd
+web_service_package_state: present
+web_service_restart_state: reloaded
+
+
+# firewall vars
+firewall_package: firewalld
+firewall_service: firewalld
+firewall_package_state: present
+firewall_restart_state: reloaded
+rule: http

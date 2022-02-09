@@ -1,0 +1,11 @@
+---
+# handlers file for ansible-role-httpd
+- name: reload webserver
+  service:
+    name: "{{ web_service }}"
+    state: "{{ web_service_restart_state }}"
+
+- name: reload firewall
+  service:
+    name: "{{ firewall_service }}"
+    state: "{{ firewall_restart_state }}"
