@@ -1,0 +1,5 @@
+---
+- name: run ftp-server installation role
+  hosts: nodes
+  roles:
+    - ansible-role-vsftpd
